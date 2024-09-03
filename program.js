@@ -13,18 +13,26 @@ function getComputerChoice() {
 
 function getHumanChoice() {
     function checkIfValid(choice) {
-        console.log(choice);
-        choice = choice.toLowerCase();
-        if (choice == "rock" || choice == "paper" || choice == "scissors") {
-            return true;
-        } else {return false}
+        switch(choice) {
+            case "rock":
+            case "paper":
+            case "scissors":
+                return true;
+                break;
+            default:
+                return false;
+        }
     }
-    let humanChoice = prompt("Choose from rock, paper, or scissors");
 
-    if (humanChoice == null) {return "Forfeit"};
+    let humanChoice = null;
+    do {
+        if (humanChoice !== null) {alert("This is not a valid choice")};
+        humanChoice = prompt("Choose from rock, paper, or scissors");
 
-    while (!checkIfValid(humanChoice)) {
-        humanChoice = prompt("This is not an accepted input. Please choose from rock, paper, or scissors");
+        if (humanChoice == null) {return "Cancel"}
+        else {humanChoice = humanChoice.toLowerCase()};
     }
+    while (!checkIfValid(humanChoice));
+
     return humanChoice
 }
