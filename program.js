@@ -24,13 +24,15 @@ function getHumanChoice() {
         }
     }
 
-    let humanChoice = null;
+    let humanChoice = 0;
+    let loopCount = 0;
     do {
-        if (humanChoice !== null) {alert("This is not a valid choice")};
+        if (loopCount > 0) {alert("This is not a valid choice")};
         humanChoice = prompt("Choose from rock, paper, or scissors");
 
         if (humanChoice == null) {return "Cancel"}
         else {humanChoice = humanChoice.toLowerCase()};
+        loopCount = 1;
     }
     while (!checkIfValid(humanChoice));
 
