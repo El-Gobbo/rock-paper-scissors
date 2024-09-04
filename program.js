@@ -5,15 +5,15 @@ function getComputerChoice() {
     computerChoice = Math.floor(computerChoice);
     computerChoice = computerChoice % 3;
     if (computerChoice == 0) {
-        return "rock";
+        return "Rock";
     } else if (computerChoice == 1) {
-        return "paper";
-    } else {return "scissors"};
+        return "Paper";
+    } else {return "Scissors"};
 }
 
 function getHumanChoice() {
     function checkIfValid(choice) {
-        switch(choice) {
+        switch(choice.toLowerCase()) {
             case "rock":
             case "paper":
             case "scissors":
@@ -30,13 +30,12 @@ function getHumanChoice() {
         if (loopCount > 0) {alert("This is not a valid choice")};
         humanChoice = prompt("Choose from rock, paper, or scissors");
 
-        if (humanChoice == null) {return "Cancel"}
-        else {humanChoice = humanChoice.toLowerCase()};
+        if (humanChoice == null) {return "Cancel"};
         loopCount = 1;
-
     }
     while (!checkIfValid(humanChoice));
 
+    humanChoice = humanChoice.at(0).toUpperCase() + humanChoice.slice(1);
     return humanChoice
 }
 
@@ -47,9 +46,9 @@ function playRound(humanChoice, computerChoice) {
         ++computerScore;
         resultMessage = `You drew!`;
     }
-    else if (humanChoice === "rock" && computerChoice === "scissors"
-        || humanChoice === "scissors" && computerChoice === "paper"
-        || humanChoice === "paper" && computerChoice === "rock") {
+    else if (humanChoice === "Rock" && computerChoice === "Scissors"
+        || humanChoice === "Scissors" && computerChoice === "Paper"
+        || humanChoice === "Paper" && computerChoice === "Rock") {
         ++humanScore;
         resultMessage = `You win! ${humanChoice} beats ${computerChoice}.`;
         }
@@ -65,4 +64,4 @@ let computerScore = 0;
 const humanSelection = getHumanChoice();
 const computerSelection = getComputerChoice();
 
-playRound(humanSelection, computerSelection)
+playRound(humanSelection, computerSelection);
