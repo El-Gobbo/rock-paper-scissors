@@ -40,28 +40,43 @@ function getHumanChoice() {
 }
 
 function playRound(humanChoice, computerChoice) {
-    let resultMessage;
+    let result;
     if (humanChoice === computerChoice) {
-        ++humanScore;
-        ++computerScore;
-        resultMessage = `You drew!`;
+        result = 'draw';
     }
     else if (humanChoice === "Rock" && computerChoice === "Scissors"
         || humanChoice === "Scissors" && computerChoice === "Paper"
-        || humanChoice === "Paper" && computerChoice === "Rock") {
-        ++humanScore;
-        resultMessage = `You win! ${humanChoice} beats ${computerChoice}.`;
+        || humanChoice === "Paper" && computerChoice === "Rock"){
+            result = 'win';
         }
-    else {++computerScore;
-        resultMessage = `You lose! ${humanChoice} is beaten by ${computerChoice}.`;
+    else {result = 'lose';
     }
-    return console.log(resultMessage);
+    return result;
 }
 
-let humanScore = 0;
-let computerScore = 0;
-
-const humanSelection = getHumanChoice();
-const computerSelection = getComputerChoice();
-
-playRound(humanSelection, computerSelection);
+function playGame() {
+    let humanScore = 0;
+    let computerScore = 0;
+    let resultMessage = "";
+    for (let i=0; i < 5; i++) {
+        let humanSelection = getHumanChoice();
+        let computerSelection = getComputerChoice();
+        let result = playRound(humanSelection, computerSelection);
+        switch(result){
+            case 'win':
+                ++humanScore;
+                resultMessage = `You win! ${humanSelection} beats ${computerSelection}.`;
+                break;
+            case 'draw':
+                ++humanScore;
+                ++computerScore;
+                resultMessage = `You drew!`;
+                break;
+            case `lose`:
+                ++computerScore;
+                resultMessage = `You lose! ${humanSelection} is beaten by ${computerSelection}.`
+                break;
+        }
+        console.log(resultMessage);
+    }
+}
