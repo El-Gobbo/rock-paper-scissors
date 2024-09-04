@@ -12,30 +12,19 @@ function getComputerChoice() {
 }
 
 function getHumanChoice() {
-    function checkIfValid(choice) {
-        switch(choice.toLowerCase()) {
-            case "rock":
-            case "paper":
-            case "scissors":
-                return true;
-                break;
-            default:
-                return false;
-        }
-    }
-
     let humanChoice = null;
     let loopCount = 0;
     do {
         if (loopCount > 0) {alert("This is not a valid choice")};
         humanChoice = prompt("Choose from rock, paper, or scissors");
-
-        if (humanChoice == null) {return "Cancel"};
-        loopCount = 1;
+        if (humanChoice == null) {return "Forfeit"}//To account for cancelling the prompt
+        else {humanChoice = (humanChoice.at(0).toUpperCase() + humanChoice.slice(1))};//To allow case-insensitive inputs
+        loopCount = 1;//to trigger an alert message warning of incorrect input
     }
-    while (!checkIfValid(humanChoice));
+    while (humanChoice != `Rock` 
+        || humanChoice != `Paper` 
+        || humanChoice != `Scissors`);
 
-    humanChoice = humanChoice.at(0).toUpperCase() + humanChoice.slice(1);
     return humanChoice
 }
 
@@ -49,7 +38,7 @@ function playRound(humanChoice, computerChoice) {
         || humanChoice === "Paper" && computerChoice === "Rock"){
             result = 'win';
         }
-    else {result = 'lose';
+    else {result = 'lose';//this also means that cancelling the prompt is a loss 
     }
     return result;
 }
