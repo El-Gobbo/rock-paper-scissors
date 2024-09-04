@@ -1,9 +1,6 @@
 function getComputerChoice() {
-    let computerChoice = 0;
-    computerChoice = Math.random();
-    computerChoice *= 1000;
+    let computerChoice = (Math.random()*3);
     computerChoice = Math.floor(computerChoice);
-    computerChoice = computerChoice % 3;
     if (computerChoice == 0) {
         return "Rock";
     } else if (computerChoice == 1) {
@@ -21,9 +18,9 @@ function getHumanChoice() {
         else {humanChoice = (humanChoice.at(0).toUpperCase() + humanChoice.slice(1))};//To allow case-insensitive inputs
         loopCount = 1;//to trigger an alert message warning of incorrect input
     }
-    while (humanChoice != `Rock` 
-        || humanChoice != `Paper` 
-        || humanChoice != `Scissors`);
+    while (humanChoice !== "Rock" 
+        && humanChoice !== "Paper" 
+        && humanChoice !== "Scissors");
 
     return humanChoice
 }
