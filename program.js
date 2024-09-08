@@ -8,58 +8,58 @@ const startButton = document.querySelector('#startGame')
 startButton.addEventListener('click',playGame, {once: true});
 
 buttonDiv.addEventListener('click', (e) => {
-    let computerSelection = computerChoice();
-    let humanSelection = '';
+    let cSelection = cChoice();
+    let hSelection = '';
     switch (e.target.id){
         case 'rock':
-            humanSelection = 'Rock';
+            hSelection = 'Rock';
             break;
         case 'paper':
-            humanSelection = 'Paper';
+            hSelection = 'Paper';
             break;
         case 'scissors':
-            humanSelection = 'Scissors';
+            hSelection = 'Scissors';
             break;
     }
-    let outcome = playRound(computerSelection,humanSelection);
+    let outcome = playRound(cSelection,hSelection);
 
 })
 
-function getComputerChoice() {
-    let computerChoice = (Math.random()*3);
-    computerChoice = Math.floor(computerChoice);
-    if (computerChoice == 0) {
+function getCChoice() {
+    let cChoice = (Math.random()*3);
+    cChoice = Math.floor(cChoice);
+    if (cChoice == 0) {
         return "Rock";
-    } else if (computerChoice == 1) {
+    } else if (cChoice == 1) {
         return "Paper";
     } else {return "Scissors"};
 }
 
-function getHumanChoice() {
-    let humanChoice = null;
+function getHChoice() {
+    let hChoice = null;
     let loopCount = 0;
     do {
         if (loopCount > 0) {alert("This is not a valid choice")};
-        humanChoice = prompt("Choose from rock, paper, or scissors");
-        if (humanChoice == null) {return "Forfeit"}//To account for cancelling the prompt
-        else {humanChoice = (humanChoice.at(0).toUpperCase() + humanChoice.slice(1))};//To allow case-insensitive inputs
+        hChoice = prompt("Choose from rock, paper, or scissors");
+        if (hChoice == null) {return "Forfeit"}//To account for cancelling the prompt
+        else {hChoice = (hChoice.at(0).toUpperCase() + hChoice.slice(1))};//To allow case-insensitive inputs
         loopCount = 1;//to trigger an alert message warning of incorrect input
     }
-    while (humanChoice !== "Rock" 
-        && humanChoice !== "Paper" 
-        && humanChoice !== "Scissors");
+    while (hChoice !== "Rock" 
+        && hChoice !== "Paper" 
+        && hChoice !== "Scissors");
 
-    return humanChoice
+    return hChoice
 }
 
-function playRound(humanChoice, computerChoice) {
+function playRound(hChoice, cChoice) {
     let result;
-    if (humanChoice === computerChoice) {
+    if (hChoice === cChoice) {
         result = 'draw';
     }
-    else if (humanChoice === "Rock" && computerChoice === "Scissors"
-        || humanChoice === "Scissors" && computerChoice === "Paper"
-        || humanChoice === "Paper" && computerChoice === "Rock"){
+    else if (hChoice === "Rock" && cChoice === "Scissors"
+        || hChoice === "Scissors" && cChoice === "Paper"
+        || hChoice === "Paper" && cChoice === "Rock"){
             result = 'win';
         }
     else {result = 'lose';//this also means that cancelling the prompt is a loss 
@@ -68,26 +68,26 @@ function playRound(humanChoice, computerChoice) {
 }
 
 function playGame() {
-    let humanScore = 0;
-    let computerScore = 0;
+    let hScore = 0;
+    let cScore = 0;
     let resultMessage = "";
-    while (humanScore < 5 && computerScore < 5) {
-        let humanSelection = getHumanChoice();
-        let computerSelection = getComputerChoice();
-        let result = playRound(humanSelection, computerSelection);
+    while (hScore < 5 && cScore < 5) {
+        let hSelection = getHChoice();
+        let cSelection = getCChoice();
+        let result = playRound(hSelection, cSelection);
         switch(result){
             case 'win':
-                ++humanScore;
-                resultMessage = `You win! ${humanSelection} beats ${computerSelection}.`;
+                ++hScore;
+                resultMessage = `You win! ${hSelection} beats ${cSelection}.`;
                 break;
             case 'draw':
-                ++humanScore;
-                ++computerScore;
+                ++hScore;
+                ++cScore;
                 resultMessage = `You drew!`;
                 break;
             case `lose`:
-                ++computerScore;
-                resultMessage = `You lose! ${humanSelection} is beaten by ${computerSelection}.`
+                ++cScore;
+                resultMessage = `You lose! ${hSelection} is beaten by ${cSelection}.`
                 break;
         }
         console.log(resultMessage);
