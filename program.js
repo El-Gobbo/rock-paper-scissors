@@ -1,3 +1,20 @@
+const rock = document.querySelector("#rock");
+const paper = document.querySelector("#paper");
+const scissors = document.querySelector("#scissors");
+const result = document.querySelector("#results");
+const buttonDiv = document.querySelector("#buttonDiv");
+
+buttonDiv.addEventListener('click', (e) => {
+    switch (e.target.id){
+        case 'rock':
+
+        case 'paper':
+
+        case 'scissors':
+
+    }
+})
+
 function getComputerChoice() {
     let computerChoice = (Math.random()*3);
     computerChoice = Math.floor(computerChoice);
