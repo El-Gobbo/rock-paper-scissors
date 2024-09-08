@@ -8,25 +8,9 @@ const cScoreNumber = document.querySelector("#cScoreNumber");
 const hScoreNumber = document.querySelector("#hScoreNumber");
 const gameElements = document.querySelector(`#game`);
 
-startButton.addEventListener('click',playGame, {once: true});
 
-buttonDiv.addEventListener('click', (e) => {
-    let cSelection = getCChoice();
-    let hSelection = '';
-    switch (e.target.id){
-        case 'rock':
-            hSelection = 'Rock';
-            break;
-        case 'paper':
-            hSelection = 'Paper';
-            break;
-        case 'scissors':
-            hSelection = 'Scissors';
-            break;
-    }
-    let outcome = playRound(cSelection,hSelection);
+startButton.addEventListener('click',playGame);
 
-})
 
 function getCChoice() {
     let cChoice = (Math.random()*3);
@@ -53,23 +37,43 @@ function playRound(hChoice, cChoice) {
     return result;
 }
 
+function winnerCheck (humanScore, computerScore) {
+    let mankind = humanScore;
+    let robotkind = computerScore;
+    if (mankind === 5 && robotkind === 5){
+        let finalMessage = `A draw! The bloodshed will continue for many moons yet to come!`
+        endGame(finalMessage);
+    } else if (mankind === 5) {
+        let finalMessage = 'You win! The machines are beaten back for one more day!';
+        endGame(finalMessage);
+    } else if (robotkind ===5){
+        let finalMessage = `You lose! The machines will crush humanity and it is all your fault.`
+        endGame(finalMessage);
+    }
+    return;
+}
+function endGame(lastMessage) {
+    alert(lastMessage);
+    startButton.textContent = `Play again?`
+    buttonDiv.removeEventListener('click', (e) => {
+        let button = e.target;
+        buttonChoice(button)})
+    startButton.addEventListener('click',playGame)
+    console.log('the game has ended');
+}
+
+
+
 function playGame() {
     function updateScore (){
         cScoreNumber.textContent = cScore;
         hScoreNumber.textContent = hScore;
-    }
-    gameElements.style.display = 'block';
-    startButton.textContent = `Game in progress`;
-    let hScore = 0;
-    let cScore = 0;
-    let resultMessage = "";
-    let cSelection = '';
-    let hSelection = '';
-    updateScore();
-    buttonDiv.addEventListener('click', (e) => {
-        cSelection = getCChoice();
-        hSelection = '';
-        switch (e.target.id){
+    };
+    function buttonChoice(choice) {
+        let resultMessage = "";
+        let cSelection = getCChoice();
+        let hSelection = '';
+        switch (choice.id){
             case 'rock':
                 hSelection = 'Rock';
                 break;
@@ -83,22 +87,33 @@ function playGame() {
         let result = playRound(hSelection, cSelection);
         switch(result){
             case 'win':
-                ++hScore;
+                hScore++;
                 resultMessage = `You win! ${hSelection} beats ${cSelection}.`;
                 break;
             case 'draw':
-                ++hScore;
-                ++cScore;
+                hScore++;
+                cScore++;
                 resultMessage = `You drew!`;
                 break;
             case `lose`:
-                ++cScore;
+                cScore++;
                 resultMessage = `You lose! ${hSelection} is beaten by ${cSelection}.`
                 break;
         }
         updateScore();
         outcome.textContent = resultMessage;
-        
+        winnerCheck(hScore,cScore);
+    }
+    startButton.removeEventListener('click',playGame)
+    gameElements.style.display = 'block';
+    startButton.textContent = `Game in progress`;
+    outcome.textContent = '';
+    let hScore = 0;
+    let cScore = 0;
+    updateScore();
+    buttonDiv.addEventListener('click', (e) => {
+        let button = e.target;
+        buttonChoice(button);
     });
-    
+
 }
