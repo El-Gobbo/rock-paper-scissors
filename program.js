@@ -8,6 +8,8 @@ const cScoreNumber = document.querySelector("#cScoreNumber");
 const hScoreNumber = document.querySelector("#hScoreNumber");
 const gameElements = document.querySelector(`#game`);
 
+let cScore=0;
+let hScore = 0;
 
 startButton.addEventListener('click',playGame);
 
@@ -55,65 +57,62 @@ function winnerCheck (humanScore, computerScore) {
 function endGame(lastMessage) {
     alert(lastMessage);
     startButton.textContent = `Play again?`
-    buttonDiv.removeEventListener('click', (e) => {
-        let button = e.target;
-        buttonChoice(button)})
     startButton.addEventListener('click',playGame)
+    buttonDiv.style.display = "none";
     console.log('the game has ended');
 }
 
+function updateScore (){
+    cScoreNumber.textContent = cScore;
+    hScoreNumber.textContent = hScore;
+};
+function buttonChoice(choice) {
+    let resultMessage = "";
+    let cSelection = getCChoice();
+    let hSelection = '';
+    switch (choice.id){
+        case 'rock':
+            hSelection = 'Rock';
+            break;
+        case 'paper':
+            hSelection = 'Paper';
+            break;
+        case 'scissors':
+            hSelection = 'Scissors';
+            break;
+    }
+    let result = playRound(hSelection, cSelection);
+    switch(result){
+        case 'win':
+            hScore++;
+            resultMessage = `You win! ${hSelection} beats ${cSelection}.`;
+            break;
+        case 'draw':
+            hScore++;
+            cScore++;
+            resultMessage = `You drew!`;
+            break;
+        case `lose`:
+            cScore++;
+            resultMessage = `You lose! ${hSelection} is beaten by ${cSelection}.`
+            break;
+    }
+    updateScore();
+    outcome.textContent = resultMessage;
+    winnerCheck(hScore,cScore);
+}
 
+buttonDiv.addEventListener('click', (e) => {
+    let button = e.target;
+    buttonChoice(button);
+});
 
 function playGame() {
-    function updateScore (){
-        cScoreNumber.textContent = cScore;
-        hScoreNumber.textContent = hScore;
-    };
-    function buttonChoice(choice) {
-        let resultMessage = "";
-        let cSelection = getCChoice();
-        let hSelection = '';
-        switch (choice.id){
-            case 'rock':
-                hSelection = 'Rock';
-                break;
-            case 'paper':
-                hSelection = 'Paper';
-                break;
-            case 'scissors':
-                hSelection = 'Scissors';
-                break;
-        }
-        let result = playRound(hSelection, cSelection);
-        switch(result){
-            case 'win':
-                hScore++;
-                resultMessage = `You win! ${hSelection} beats ${cSelection}.`;
-                break;
-            case 'draw':
-                hScore++;
-                cScore++;
-                resultMessage = `You drew!`;
-                break;
-            case `lose`:
-                cScore++;
-                resultMessage = `You lose! ${hSelection} is beaten by ${cSelection}.`
-                break;
-        }
-        updateScore();
-        outcome.textContent = resultMessage;
-        winnerCheck(hScore,cScore);
-    }
     startButton.removeEventListener('click',playGame)
-    gameElements.style.display = 'block';
+    buttonDiv.style.display = 'block';
     startButton.textContent = `Game in progress`;
     outcome.textContent = '';
-    let hScore = 0;
-    let cScore = 0;
+    hScore = 0;
+    cScore = 0;
     updateScore();
-    buttonDiv.addEventListener('click', (e) => {
-        let button = e.target;
-        buttonChoice(button);
-    });
-
 }
