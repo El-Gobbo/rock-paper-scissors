@@ -3,16 +3,26 @@ const paper = document.querySelector("#paper");
 const scissors = document.querySelector("#scissors");
 const result = document.querySelector("#results");
 const buttonDiv = document.querySelector("#buttonDiv");
+const startButton = document.querySelector('#startGame')
+
+startButton.addEventListener('click',playGame, {once: true});
 
 buttonDiv.addEventListener('click', (e) => {
+    let computerSelection = computerChoice();
+    let humanSelection = '';
     switch (e.target.id){
         case 'rock':
-
+            humanSelection = 'Rock';
+            break;
         case 'paper':
-
+            humanSelection = 'Paper';
+            break;
         case 'scissors':
-
+            humanSelection = 'Scissors';
+            break;
     }
+    let outcome = playRound(computerSelection,humanSelection);
+
 })
 
 function getComputerChoice() {
@@ -61,7 +71,7 @@ function playGame() {
     let humanScore = 0;
     let computerScore = 0;
     let resultMessage = "";
-    for (let i=0; i < 5; i++) {
+    while (humanScore < 5 && computerScore < 5) {
         let humanSelection = getHumanChoice();
         let computerSelection = getComputerChoice();
         let result = playRound(humanSelection, computerSelection);
