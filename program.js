@@ -8,7 +8,7 @@ const startButton = document.querySelector('#startGame')
 startButton.addEventListener('click',playGame, {once: true});
 
 buttonDiv.addEventListener('click', (e) => {
-    let cSelection = cChoice();
+    let cSelection = getCChoice();
     let hSelection = '';
     switch (e.target.id){
         case 'rock':
@@ -22,6 +22,7 @@ buttonDiv.addEventListener('click', (e) => {
             break;
     }
     let outcome = playRound(cSelection,hSelection);
+    alert(outcome);
 
 })
 
