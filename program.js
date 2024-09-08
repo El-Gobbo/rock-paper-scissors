@@ -6,6 +6,7 @@ const buttonDiv = document.querySelector("#buttonDiv");
 const startButton = document.querySelector('#startGame');
 const cScoreNumber = document.querySelector("#cScoreNumber");
 const hScoreNumber = document.querySelector("#hScoreNumber");
+const gameElements = document.querySelector(`#game`);
 
 startButton.addEventListener('click',playGame, {once: true});
 
@@ -57,6 +58,7 @@ function playGame() {
         cScoreNumber.textContent = cScore;
         hScoreNumber.textContent = hScore;
     }
+    gameElements.style.display = 'block';
     startButton.textContent = `Game in progress`;
     let hScore = 0;
     let cScore = 0;
