@@ -1,7 +1,7 @@
 const rock = document.querySelector("#rock");
 const paper = document.querySelector("#paper");
 const scissors = document.querySelector("#scissors");
-const result = document.querySelector("#results");
+const outcome = document.querySelector("#results");
 const buttonDiv = document.querySelector("#buttonDiv");
 const startButton = document.querySelector('#startGame')
 
@@ -72,25 +72,41 @@ function playGame() {
     let hScore = 0;
     let cScore = 0;
     let resultMessage = "";
+    let cSelection = '';
+    let hSelection = '';
     while (hScore < 5 && cScore < 5) {
-        let hSelection = getHChoice();
-        let cSelection = getCChoice();
-        let result = playRound(hSelection, cSelection);
-        switch(result){
-            case 'win':
-                ++hScore;
-                resultMessage = `You win! ${hSelection} beats ${cSelection}.`;
-                break;
-            case 'draw':
-                ++hScore;
-                ++cScore;
-                resultMessage = `You drew!`;
-                break;
-            case `lose`:
-                ++cScore;
-                resultMessage = `You lose! ${hSelection} is beaten by ${cSelection}.`
-                break;
+        buttonDiv.addEventListener('click', (e) => {
+            cSelection = getCChoice();
+            hSelection = '';
+            switch (e.target.id){
+                case 'rock':
+                    hSelection = 'Rock';
+                    break;
+                case 'paper':
+                    hSelection = 'Paper';
+                    break;
+                case 'scissors':
+                    hSelection = 'Scissors';
+                    break;
+            }
+            let result = playRound(hSelection, cSelection);
+            switch(result){
+                case 'win':
+                    ++hScore;
+                    resultMessage = `You win! ${hSelection} beats ${cSelection}.`;
+                    break;
+                case 'draw':
+                    ++hScore;
+                    ++cScore;
+                    resultMessage = `You drew!`;
+                    break;
+                case `lose`:
+                    ++cScore;
+                    resultMessage = `You lose! ${hSelection} is beaten by ${cSelection}.`
+                    break;
         }
-        console.log(resultMessage);
+        outcome.textContent = resultMessage;
+        
+        });
     }
 }
