@@ -68,6 +68,7 @@ function playRound(hChoice, cChoice) {
 }
 
 function playGame() {
+    startButton.textContent = `Game in progress`;
     let hScore = 0;
     let cScore = 0;
     let resultMessage = "";
